@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewEncapsulation, OnChanges, SimpleChanges, AfterContentInit, AfterContentChecked, DoCheck, AfterViewInit, AfterViewChecked, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation, OnChanges, SimpleChanges, AfterContentInit, AfterContentChecked, DoCheck, AfterViewInit, AfterViewChecked, OnDestroy, ViewChild, ElementRef, ContentChild } from '@angular/core';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
 
 @Component({
@@ -11,6 +11,8 @@ import { connectableObservableDescriptor } from 'rxjs/internal/observable/Connec
 export class ServerElementComponent implements OnInit, OnChanges, DoCheck, AfterContentInit, AfterContentChecked, AfterViewInit, AfterViewChecked, OnDestroy {
   @Input('srvElement') element: {type: string, name: string, content: string}
   @Input() name: string
+  @ViewChild('heading', { static: true} ) header: ElementRef
+  @ContentChild('contentParagraph', { static: true }) paragraph: ElementRef
 
   constructor() {
     console.log('constructor called')
@@ -23,7 +25,8 @@ export class ServerElementComponent implements OnInit, OnChanges, DoCheck, After
 
   ngOnInit(): void {
     console.log('ngOnInt called')
-
+    console.log('Text Content: ' + this.header.nativeElement.textContent)
+    console.log('Text Content of Paragraph: ' + this.paragraph.nativeElement.textContent)
   }
 
   ngDoCheck() {
@@ -32,6 +35,8 @@ export class ServerElementComponent implements OnInit, OnChanges, DoCheck, After
 
   ngAfterContentInit(): void {
     console.log('ngAfterContentInit is called')
+    console.log('Text Content of Paragraph: ' + this.paragraph.nativeElement.textContent)
+
   }
 
   ngAfterContentChecked() {
@@ -40,6 +45,9 @@ export class ServerElementComponent implements OnInit, OnChanges, DoCheck, After
 
   ngAfterViewInit(){
     console.log('ngAfterContentInit is called')
+    console.log('Text Content: ' + this.header.nativeElement.textContent)
+
+
   }
 
   ngAfterViewChecked() {
